@@ -7,44 +7,80 @@ import {
 } from 'react-google-maps';
 import Axios from 'axios';
 
-const renderRegions = data => {
-  const coordArr = [];
-  //   data needs to be in this shape
-  //   this can be rewritten such that it returns the component in the map ofc, but this was just a proof of concept
-  data.map(coord => coordArr.push({ lat: coord[1], lng: coord[0] }));
-  return (
-    <Polygon
-      path={coordArr}
-      options={{
-        strokeColor: '#fc1e0d',
-        strokeOpacity: 1,
-        strokeWeight: 2,
-        icons: [
-          {
-            icon: 'hello',
-            offset: '0',
-            repeat: '10px',
-          },
-        ],
-      }}
-    />
-  );
-};
-
 const MapContainer = () => {
-  const [data, setData] = React.useState([]);
+  const [mapData, setMapData] = React.useState([]);
   useEffect(() => {
     Axios.get(
       'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json',
     ).then(res => {
-      setData(res.data.features);
+      setMapData(res.data.features);
     });
   }, []);
+
+  console.log(<GoogleMap />);
+  // const renderDudes = data => {
+  //   return data.map(type => {
+  //     if (type.geometry.coordinates.length > 2) {
+  //       console.log(type);
+  //       console.log(<GoogleMap />);
+  //     }
+  //     if (type.geometry.coordinates.length === 2) {
+  //       const coords = type.geometry.coordinates[0][0];
+  //       const coordArr = [];
+  //       coords.map(coord => coordArr.push({ lat: coord[1], lng: coord[0] }));
+
+  //       return (
+  //         <Polygon
+  //           path={coordArr}
+  //           options={{
+  //             strokeColor: '#fc1e0d',
+  //             strokeOpacity: 1,
+  //             strokeWeight: 2,
+  //             icons: [
+  //               {
+  //                 icon: 'hello',
+  //                 offset: '0',
+  //                 repeat: '10px',
+  //               },
+  //             ],
+  //           }}
+  //         />
+  //       );
+  //     }
+
+  //     if (type.geometry.coordinates.length === 1) {
+  //       const coords = type.geometry.coordinates[0];
+  //       const coordArr = [];
+  //       coords.map(coord => coordArr.push({ lat: coord[1], lng: coord[0] }));
+
+  //       return (
+  //         <Polygon
+  //           path={coordArr}
+  //           options={{
+  //             strokeColor: '#fc1e0d',
+  //             strokeOpacity: 1,
+  //             strokeWeight: 2,
+  //             icons: [
+  //               {
+  //                 icon: 'hello',
+  //                 offset: '0',
+  //                 repeat: '10px',
+  //               },
+  //             ],
+  //           }}
+  //         />
+  //       );
+  //     }
+  //   });
+  // };
+
   return (
     <>
-      {' '}
-      <GoogleMap defaultZoom={10} defaultCenter={{ lat: 12, lng: 12 }} />
-      <pre>{JSON.stringify(data, null, 4)}</pre>
+      <GoogleMap
+        defaultZoom={4}
+        defaultCenter={{ lng: 61.210817, lat: 35.650072 }}
+        // data={addGeoJson(mapData)}
+      />
     </>
   );
 };
