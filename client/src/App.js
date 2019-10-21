@@ -1,12 +1,6 @@
 import React from 'react';
-import LoginForm from './login/LoginForm';
+import MapContainer from './containers/map/MapContainer';
 
-const App = () => {
-  return (
-    <>
-      <div>Hello World</div>
-      <LoginForm />
-    </>
-  );
-};
+const App = () => <MapContainer />;
+
 export default App;
