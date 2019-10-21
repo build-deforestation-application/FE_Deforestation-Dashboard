@@ -1,11 +1,11 @@
 import React from 'react';
-import LoginForm from "./login/LoginForm"
+import LoginForm from './login/LoginForm';
 
-const App = () => { 
- return(
-   <>
-    <div>Hello World</div>
-    <LoginForm/>
+const App = () => {
+  return (
+    <>
+      <div>Hello World</div>
+      <LoginForm />
     </>
   );
 };
