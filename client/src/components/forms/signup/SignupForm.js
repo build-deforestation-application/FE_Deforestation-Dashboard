@@ -3,6 +3,34 @@ import React, { useState, useEffect } from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import styled from 'styled-components';
+
+// ============== Styling ===============
+
+const FormContainer = styled.div`
+  margin: 1.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5),
+              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  max-width: 350px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+
+  line-height: 2rem;
+
+  label {
+    display: block;
+  }
+
+  .error {
+    color: red;
+    margin-top: -0.5rem;
+  }
+`;
 
 // ============== General Form =================
 
@@ -13,7 +41,7 @@ const SignupForm = ({ values, touched, errors, status }) => {
   }, [status]);
 
   return (
-    <div className="formContainer">
+    <FormContainer>
       <h2>Signup!</h2>
 
       <Form>
@@ -72,7 +100,7 @@ const SignupForm = ({ values, touched, errors, status }) => {
 
         <button type="submit">Submit!</button>
       </Form>
-    </div>
+    </FormContainer>
   );
 };
 
