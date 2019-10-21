@@ -1,18 +1,54 @@
-import React from 'react';
-import GoogleMapReact from 'google-map-react';
+import React, { useEffect } from 'react';
+import {
+  withGoogleMap,
+  GoogleMap,
+  withScriptjs,
+  Polygon,
+} from 'react-google-maps';
+import Axios from 'axios';
 
-const MapContainer = () => {
+const renderRegions = data => {
+  const coordArr = [];
+  //   data needs to be in this shape
+  //   this can be rewritten such that it returns the component in the map ofc, but this was just a proof of concept
+  data.map(coord => coordArr.push({ lat: coord[1], lng: coord[0] }));
   return (
-    <div className="map-container-flex">
-      <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: `AIzaSyBFx7hyKdz_P_zqJCvtG_S07js4cOXupAQ` }}
-          center={{ lat: 30.2672, lng: -97.7431 }}
-          defaultZoom={14}
-        />
-      </div>
-    </div>
+    <Polygon
+      path={coordArr}
+      options={{
+        strokeColor: '#fc1e0d',
+        strokeOpacity: 1,
+        strokeWeight: 2,
+        icons: [
+          {
+            icon: 'hello',
+            offset: '0',
+            repeat: '10px',
+          },
+        ],
+      }}
+    />
   );
 };
 
-export default MapContainer;
+const MapContainer = () => {
+  const [data, setData] = React.useState([]);
+  useEffect(() => {
+    Axios.get(
+      'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json',
+    ).then(res => {
+      setData(res.data.features);
+    });
+  }, []);
+  return (
+    <>
+      {' '}
+      <GoogleMap defaultZoom={10} defaultCenter={{ lat: 12, lng: 12 }} />
+      <pre>{JSON.stringify(data, null, 4)}</pre>
+    </>
+  );
+};
+
+const WrappedMap = withScriptjs(withGoogleMap(MapContainer));
+
+export default WrappedMap;
