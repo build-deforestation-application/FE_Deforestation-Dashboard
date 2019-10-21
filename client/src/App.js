@@ -1,5 +1,6 @@
 import React from 'react';
+import MapContainer from './containers/map/MapContainer';
 
-const App = () => <div>Hello World</div>;
+const App = () => <MapContainer />;
 
 export default App;
