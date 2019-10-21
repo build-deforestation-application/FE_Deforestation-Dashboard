@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { withFormik, Form, Field } from 'formik';
 
@@ -29,8 +30,5 @@ const LoginForm = withFormik({
     // do stuff with values
   },
 })(Login);
-
-
-
 
 export default LoginForm;
