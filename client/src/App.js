@@ -1,6 +1,6 @@
 import React from 'react';
-import MapContainer from './containers/map/MapContainer';
+import LoginForm from './components/forms/login/LoginForm';
 
-const App = () => <MapContainer />;
+const App = () => <LoginForm />;
 
 export default App;
