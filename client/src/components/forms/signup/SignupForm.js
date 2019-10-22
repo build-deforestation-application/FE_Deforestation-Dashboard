@@ -1,168 +1,64 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import styled from 'styled-components';
+import axiosWithAuth from '../../../utils/axios';
 
-// ============== Styling ===============
-
-const FormContainer = styled.div`
-  margin: 1.5rem;
-  padding: 1rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5),
-              0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-  max-width: 350px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
-
-  line-height: 2rem;
-
-  label {
-    display: block;
-  }
-
-  .error {
-    color: red;
-    margin-top: -0.5rem;
-  }
-`;
-
-// ============== General Form =================
-
-const SignupForm = ({ values, touched, errors, status }) => {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    status && setUsers(users => [...users, status]);
-  }, [status]);
-
+const SignUpForm = ({ values, touched, errors }) => {
   return (
-    <FormContainer>
-      <h2>Signup!</h2>
+    <div>
+      <h2>Register</h2>
+      <Form className="signin-form">
+        <Field type="text" name="userName" placeholder="Enter your name" />
+        <Field type="email" name="email" placeholder="Enter your Email" />
+        {touched.email && errors.email && <p>{errors.email}</p>}
 
-      <Form>
-        <label>
-          Name:
-          <Field type="text" name="name" placeholder="Smokey the Bear" />
-          {touched.name && errors.name && (
-            <p className="error">{errors.name}</p>
-          )}
-        </label>
+        <Field
+          type="password"
+          name="password"
+          placeholder="Choose your password"
+        />
+        {touched.password && errors.password && <p>{errors.password}</p>}
 
-        <label>
-          Email:
-          <Field type="text" name="email" placeholder="this@that.com" />
-          {touched.email && errors.email && (
-            <p className="error">{errors.email}</p>
-          )}
-        </label>
-
-        <label>
-          Password:
-          <Field type="password" name="password" />
-          {touched.password && errors.password && (
-            <p className="error">{errors.password}</p>
-          )}
-        </label>
-
-        <label>
-          Confirm password:
-          <Field type="password" name="passwordConf" />
-          {touched.passwordConf && errors.passwordConf && (
-            <p className="error">{errors.passwordConf}</p>
-          )}
-        </label>
-
-        <label>
-          Position:
-          <Field className="dropdown" component="select" name="position">
-            <option>North America</option>
-            <option>Brazil</option>
-            <option>Southeast Asia</option>
-            <option>Cascadia</option>
-            <option>California</option>
-            <option>Tanzania</option>
-          </Field>
-          {touched.position && errors.position && (
-            <p className="error">{errors.position}</p>
-          )}
-        </label>
-
-        <label>
-          Terms of Service
-          <Field type="checkbox" name="tos" checked={values.tos} />
-          {touched.tos && errors.tos && <p className="error">{errors.tos}</p>}
-        </label>
-
-        <button type="submit">Submit!</button>
+        <button type="submit">Submit</button>
       </Form>
-    </FormContainer>
+    </div>
   );
 };
 
-// ============== Formik Form ===============
-
-const FormikSignupForm = withFormik({
-  //-------- Map Values -----------
-  mapPropsToValues({ name, email, password, position, tos }) {
+const FormikSignUpForm = withFormik({
+  mapPropsToValues({ userName, email, password }) {
     return {
-      name: name || '',
+      userName: userName || '',
       email: email || '',
       password: password || '',
-      position: position || '',
-      tos: tos || false,
     };
   },
-
-  //------- Validate Form --------
   validationSchema: Yup.object().shape({
-    name: Yup.string()
-      .required('Name is required.')
-      .min(2, 'Your name is too short')
-      .max(50, 'Your name is too long'),
-
     email: Yup.string()
-      .required('Email is required.')
-      .email('Invalid email address.'),
-
+      .email('Please enter a valid email address')
+      .required('You must enter an email address.'),
     password: Yup.string()
-      .required('You must choose a password')
-      .min(9, 'Your password is too short.')
-      .matches(
-        '/^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm',
-        'Password must contain upper & lower case, plus numerals.',
-      ),
-
-    passwordConf: Yup.string().oneOf(
-      [Yup.ref('password'), null],
-      'Passwords must match',
-    ),
-
-    // region: Yup.string()
-    // Not required
-
-    tos: Yup.boolean().test(
-      'is-true',
-      'You must agree to the terms to continue',
-      value => value === true,
-    ),
+      .required('You must enter a valid password')
+      .min(8, 'Your password must be no less than 8 characters long')
+      .max(20, 'Your password must be no more than 20 characters long'),
   }),
-
-  //-------- Submit form ----------
-  handleSubmit(values, { setStatus, resetForm }) {
-    axios
-      .post('https://reqres.in/api/users/', values) // Temporary
-      .then(res => {
-        console.log(res.data);
-        setStatus(res.data);
-        resetForm();
+  handleSubmit(values, { props }) {
+    // props for history
+    console.log(props);
+    axiosWithAuth()
+      .post('/auth/register', {
+        userName: values.userName,
+        password: values.password,
+        email: values.email,
       })
-      .catch(err => console.log(err.response));
+      .then(res => {
+        console.log('response', res);
+      })
+      .catch(err => {
+        console.error('error', err);
+      });
   },
-})(SignupForm);
+})(SignUpForm);
 
-export default FormikSignupForm;
+export default FormikSignUpForm;
