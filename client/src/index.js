@@ -6,6 +6,7 @@ import RightSidebar from './components/sidebar/RightSidebar';
 import store from './reducers';
 
 import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 render(
   <Provider store={store}>
