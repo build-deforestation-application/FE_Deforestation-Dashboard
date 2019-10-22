@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginForm from './components/forms/login/LoginForm';
+import RightSidebar from './components/sidebar/RightSidebar';
 
-const App = () => <LoginForm />;
+const App = () => <RightSidebar />;
 
 export default App;
