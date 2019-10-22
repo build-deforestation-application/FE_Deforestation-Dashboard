@@ -1,6 +1,10 @@
 import React from 'react';
-import MapContainer from './containers/map/MapContainer';
+import RightSidebar from './components/sidebar/RightSidebar';
 
+<<<<<<< HEAD
+const App = () => <RightSidebar />;
+
+=======
 const App = () => {
   return (
     <div>
@@ -8,4 +12,5 @@ const App = () => {
     </div>
   );
 };
+>>>>>>> 0ba50d8e1ae7b284e33fce04921cd5302ee4a0ad
 export default App;
