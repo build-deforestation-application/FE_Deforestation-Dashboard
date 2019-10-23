@@ -48,7 +48,7 @@ function HomeIcon(props) {
 
 const Navbar = () => {
   const classes = useStyles();
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     axios
@@ -118,14 +118,6 @@ const Navbar = () => {
               linkButton={true}
             >
               Log in{' '}
-            </Button>
-
-            <Button
-              className={classes.buttons}
-              containerElement={<Link to="/" />}
-              linkButton={true}
-            >
-              Log out{' '}
             </Button>
           </div>
         </Toolbar>
