@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useRef, useEffect } from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -45,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const LoginForm = () => {
+const LoginForm = props => {
   const classes = useStyles();
   const labelRef = useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -71,8 +70,9 @@ const LoginForm = () => {
       })
       .then(res => {
         localStorage.setItem('token', res.data);
-        // push to private route
-      });
+        props.history.push('/dashboard')
+      })
+      .catch(err => console.log(err))
   };
 
   return (
