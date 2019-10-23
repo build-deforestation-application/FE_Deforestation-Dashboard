@@ -1,17 +1,24 @@
 import React from 'react';
-import SignupForm from './components/forms/signup/SignupForm';
-import LoginForm from './components/forms/login/LoginForm';
-import MapContainer from './containers/map/MapContainer';
-import RightSidebar from './components/sidebar/RightSidebar';
+// import MapContainer from './containers/map/MapContainer';
+import { Switch, Route } from 'react-router-dom'
+
+// components
+import Private from './utils/Private'
+import LoginForm from './components/forms/login/LoginForm'
+import SignUpForm from './components/forms/signup/SignupForm'
+import Dashboard from './components/dashboard/Dashboard'
 
 const App = () => {
   return (
-    <div>
-      <LoginForm />
-      <SignupForm />
-      <RightSidebar />
-      {/* <MapContainer /> */}
-    </div>
+    <>
+      <div>
+        <Switch>
+          <Route path='/signup' component={SignUpForm} />
+          <Private path='/dashboard' component={Dashboard} />
+          <Route exact path='/' component={LoginForm} />
+        </Switch>
+      </div>
+    </>
   );
 };
 

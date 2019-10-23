@@ -16,3 +16,4 @@ export default ({ component: Component, ...rest }) => (
     }
   />
 );
+    
