@@ -85,6 +85,7 @@ const LoginForm = props => {
 
           <OutlinedInput
             id="component-outlined-email-input"
+            type="email"
             value={values.email}
             onChange={handleChange('email')}
             labelWidth={labelWidth}
