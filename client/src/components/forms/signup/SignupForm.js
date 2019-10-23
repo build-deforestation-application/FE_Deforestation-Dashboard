@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignUpForm = () => {
+const SignUpForm = props => {
   const classes = useStyles();
   const [values, setValues] = useState({
     userName: '',
@@ -81,6 +81,7 @@ const SignUpForm = () => {
       .catch(err => {
         console.error('error', err);
       });
+      props.history.push('/')
   };
 
   return (
