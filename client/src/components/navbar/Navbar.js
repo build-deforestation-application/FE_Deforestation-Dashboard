@@ -72,6 +72,16 @@ const Navbar = () => {
                 containerElement={<Link to="/" />}
                 linkButton={true}
               >
+                Home{' '}
+              </Button>
+            </div>
+
+            <div>
+              <Button
+                className={classes.buttons}
+                containerElement={<Link to="/" />}
+                linkButton={true}
+              >
                 Log out{' '}
               </Button>
             </div>
@@ -97,29 +107,17 @@ const Navbar = () => {
           </div>
 
           <div>
-            <Button
-              className={classes.buttons}
-              containerElement={<Link to="/signUpPage" />}
-              linkButton={true}
-            >
-              Sign up{' '}
-            </Button>
+            <Link to="/signup">
+              <Button className={classes.buttons} linkButton={true}>
+                Sign up{' '}
+              </Button>
+            </Link>
 
-            <Button
-              className={classes.buttons}
-              containerElement={<Link to="/logInPage" />}
-              linkButton={true}
-            >
-              Log in{' '}
-            </Button>
-
-            <Button
-              className={classes.buttons}
-              containerElement={<Link to="/" />}
-              linkButton={true}
-            >
-              Log out{' '}
-            </Button>
+            <Link to="/">
+              <Button className={classes.buttons} linkButton={true}>
+                Log in{' '}
+              </Button>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>

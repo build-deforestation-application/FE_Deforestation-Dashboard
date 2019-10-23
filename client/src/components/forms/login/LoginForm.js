@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const LoginForm = props => {
+const LoginForm = () => {
   const classes = useStyles();
   const labelRef = useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -70,9 +70,8 @@ const LoginForm = props => {
       })
       .then(res => {
         localStorage.setItem('token', res.data);
-        props.history.push('/dashboard')
-      })
-      .catch(err => console.log(err))
+        // push to private route
+      });
   };
 
   return (
