@@ -13,7 +13,6 @@ const App = () => {
   return (
     <>
       <div>
-        <Navbar />
         <Switch>
           <Route path="/signup" component={SignUpForm} />
           <Private path="/dashboard" component={Dashboard} />
