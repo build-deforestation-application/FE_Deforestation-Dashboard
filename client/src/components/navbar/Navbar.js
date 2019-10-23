@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -52,11 +52,41 @@ const Navbar = () => {
 
   useEffect(() => {
     axios
-      .get("https://be-deforestation.herokuapp.com/query")
+      .get('https://be-deforestation.herokuapp.com/query')
       .then(res => console.log(res))
-      .catch(err => console.log(err))
-  },[loggedIn])
+      .catch(err => console.log(err));
+  }, [loggedIn]);
 
+  if (loggedIn) {
+    return (
+      <div>
+        <AppBar className={classes.appBar}>
+          <Toolbar className={classes.menuItems}>
+            <div className={classes.leftGroup}>
+              <HomeIcon
+                color="primary"
+                style={{ width: '20px', height: '35px' }}
+                viewBox="0 0 20 30"
+              />
+              <Typography variant="h6" className={classes.title}>
+                Deforestation Dashboard
+              </Typography>
+            </div>
+
+            <div>
+              <Button
+                className={classes.buttons}
+                containerElement={<Link to="/" />}
+                linkButton={true}
+              >
+                Log out{' '}
+              </Button>
+            </div>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -74,7 +104,6 @@ const Navbar = () => {
           </div>
 
           <div>
-            {/* <Route path="/" */}
             <Button
               className={classes.buttons}
               containerElement={<Link to="/signUpPage" />}
@@ -82,7 +111,7 @@ const Navbar = () => {
             >
               Sign up{' '}
             </Button>
-            {/* <Route path="/" */}
+
             <Button
               className={classes.buttons}
               containerElement={<Link to="/logInPage" />}
@@ -90,14 +119,14 @@ const Navbar = () => {
             >
               Log in{' '}
             </Button>
-            {/* <Route path="/appPage" */}
-            {/* <Button
+
+            <Button
               className={classes.buttons}
               containerElement={<Link to="/" />}
               linkButton={true}
             >
               Log out{' '}
-            </Button>  */}
+            </Button>
           </div>
         </Toolbar>
       </AppBar>
