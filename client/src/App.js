@@ -1,6 +1,15 @@
 import React from 'react';
-import Navbar from "./components/navbar/Navbar"
+import SignupForm from './components/forms/signup/SignupForm';
+import LoginForm from './components/forms/login/LoginForm';
 
-const App = () => <Navbar />;
+const App = () => {
+  return (
+    <div>
+      {/* <LoginForm /> */}
+      {/* <SignupForm /> */}
+      {/* <MapContainer /> */}
+    </div>
+  );
+};
 
 export default App;

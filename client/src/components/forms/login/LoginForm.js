@@ -8,6 +8,8 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 
+import axiosWithAuth from '../../../utils/axios';
+
 const useStyles = makeStyles(theme => ({
   myCard: {
     display: 'flex',
@@ -61,8 +63,16 @@ const LoginForm = () => {
   };
 
   const handleSubmit = event => {
-    event.preventDefault()
-    // do something with values
+    event.preventDefault();
+    axiosWithAuth()
+      .post('/auth/login', {
+        email: values.email,
+        password: values.password,
+      })
+      .then(res => {
+        localStorage.setItem('token', res.data);
+        // push to private route
+      });
   };
 
   return (
