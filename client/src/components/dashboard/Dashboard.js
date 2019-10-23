@@ -3,6 +3,7 @@ import getRaw from '../../services/getRaw';
 import axiosWithAuth from '../../utils/axios';
 
 import RightSidebar from './sidebar/RightSidebar';
+import LeftSidebar from './sidebar/LeftSidebar';
 import Map from '../../containers/map/MapContainer';
 import Navbar from '../../components/navbar/Navbar';
 
@@ -22,6 +23,7 @@ export default () => {
     <>
       <Navbar />
       <div className={dashboard.container}>
+        <LeftSidebar />
         <Map />
         <RightSidebar />
       </div>

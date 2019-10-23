@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: '250px',
     marginTop: theme.spacing(8),
-    padding: theme.spacing(3,2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
@@ -41,9 +40,6 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
-  },
-  formControl: {
-    margin: theme.spacing(1),
   },
   submitButton: {   // TODO: MAKE ME GREEN!
     marginTop: '2rem',
@@ -68,7 +64,6 @@ const SignUpForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    alert("Submitting the form!"); // TODO: REMOVE ME!
     axiosWithAuth()
       .post('/auth/register', {
         userName: values.userName,
