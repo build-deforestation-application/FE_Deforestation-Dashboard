@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import RightSidebar from './components/sidebar/RightSidebar';
 
 import store from './reducers';
 
@@ -10,7 +9,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 render(
   <Provider store={store}>
-    <RightSidebar />
+    <App />
   </Provider>,
   document.getElementById('root'),
 );
