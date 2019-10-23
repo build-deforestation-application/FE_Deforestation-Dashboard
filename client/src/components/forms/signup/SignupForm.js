@@ -1,39 +1,54 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect, useRef } from 'react';
-// import { withFormik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
+// import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper';
 
 import axiosWithAuth from '../../../utils/axios';
 
 const useStyles = makeStyles(theme => ({
 
-  root: {
+  root: { // Doesn't seem to be active
+    maxWidth: '250px',
     marginTop: theme.spacing(8),
+    padding: theme.spacing(3,2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
+    border: '1px solid black',
+    MuiFormControl: {
+      margin: theme.spacing(1),
+    },
   },
   container: {
-    margin: 'theme-spacing',
-    maxWidth: '600px',
-    // padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
+    // margin: 'theme-spacing',
+    maxWidth: '250px',
+    padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContents: 'center',
-
+    formControl: {
+      margin: theme.spacing(1),
+    },
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+  formControl: {
+    margin: theme.spacing(1),
   },
 
   submitButton: {
     marginTop: '2rem',
     marginLeft: '3rem',
     display: 'flex',
-    justifyContent: 'center',
+    alignSelf: 'center',
   },
 }));
 
@@ -46,21 +61,13 @@ const SignUpForm = () => {
     confirmPassword: '',
   });
 
-  // const labelRef = useRef(null);
-  // const [labelWidth, setLabelWidth] = React.useState(0);
-  // useEffect(() => {
-  //   setLabelWidth(labelRef.current.offsetWidth);
-  // }, []);
-
   const handleChange = prop => event => {
-    setValues({...values, [prop]: event.target.value})
-  }
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
-    // props for history
-    // console.log(props);
-    alert("Submitting the form!");
+    alert("Submitting the form!"); // REMOVE ME!
     axiosWithAuth()
       .post('/auth/register', {
         userName: values.userName,
@@ -75,10 +82,8 @@ const SignUpForm = () => {
       });
   };
 
-
   return (
-    <div className={classes.container}>
-      <h2>Register</h2>
+    <Paper className={classes.root}>
       <form onSubmit={handleSubmit}>
         
         <TextField
@@ -134,52 +139,10 @@ const SignUpForm = () => {
           variant="contained"
           type="submit"
           className={classes.submitButton}
-          >Submit</Button>
+          >Register</Button>
       </form>
-    </div>
+    </Paper>
   );
 };
 
-/*****************************************
-const FormikSignUpForm = withFormik({
-  mapPropsToValues({ userName, email, password, confirmPassword }) {
-    console.log("Formik Props:",userName, email, password, confirmPassword);
-    return {
-      userName: userName || '',
-      email: email || '',
-      password: password || '',
-    };
-  },
-  validationSchema: Yup.object().shape({
-
-    userName: Yup.string()
-      .required('A user name is required to register.')
-      .min(3, 'Please choose a longer user name.'),
-    email: Yup.string()
-      .email('Please enter a valid email address')
-      .required('You must enter an email address.'),
-    password: Yup.string()
-      .required('You must enter a valid password')
-      .min(8, 'Your password must be at least 8 characters long'),
-  }),
-
-  handleSubmit(values, { props }) {
-    // props for history
-    console.log(props);
-    alert("Submitting the form!");
-    axiosWithAuth()
-      .post('/auth/register', {
-        userName: values.userName,
-        password: values.password,
-        email: values.email,
-      })
-      .then(res => {
-        console.log('response', res);
-      })
-      .catch(err => {
-        console.error('error', err);
-      });
-  },
-})(SignUpForm);
-************************************/
 export default SignUpForm;
