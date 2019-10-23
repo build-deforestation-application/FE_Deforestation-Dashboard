@@ -3,35 +3,37 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import Card from '@material-ui/core/Card';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
 
 import axiosWithAuth from '../../../utils/axios';
 
 const useStyles = makeStyles(theme => ({
 
-  root: { // Doesn't seem to be active
+  signupCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    aligItems: 'center',
+    height: '400px',
+    width: '250px',
+    paddingLeft: '2rem',
+  },
+
+  formControl: {
+    margin: theme.spacing(2),
+  },
+
+  root: {
     maxWidth: '250px',
     marginTop: theme.spacing(8),
     padding: theme.spacing(3,2),
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-around',
+    alignItems: 'flex-end',
     padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
     border: '1px solid black',
     MuiFormControl: {
-      margin: theme.spacing(1),
-    },
-  },
-  container: {
-    // margin: 'theme-spacing',
-    maxWidth: '250px',
-    padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContents: 'center',
-    formControl: {
       margin: theme.spacing(1),
     },
   },
@@ -43,8 +45,7 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
   },
-
-  submitButton: {
+  submitButton: {   // TODO: MAKE ME GREEN!
     marginTop: '2rem',
     marginLeft: '3rem',
     display: 'flex',
@@ -67,7 +68,7 @@ const SignUpForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    alert("Submitting the form!"); // REMOVE ME!
+    alert("Submitting the form!"); // TODO: REMOVE ME!
     axiosWithAuth()
       .post('/auth/register', {
         userName: values.userName,
@@ -83,7 +84,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <Paper className={classes.root}>
+    <Card className={classes.signupCard}>
       <form onSubmit={handleSubmit}>
         
         <TextField
@@ -141,7 +142,7 @@ const SignUpForm = () => {
           className={classes.submitButton}
           >Register</Button>
       </form>
-    </Paper>
+    </Card>
   );
 };
 
