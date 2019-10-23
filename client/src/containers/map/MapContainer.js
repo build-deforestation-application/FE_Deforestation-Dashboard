@@ -33,7 +33,7 @@ export default () => {
 
   return (
     <>
-      <Wrapper width="100vw" height="100vh" id="map" />
+      <Wrapper width="40vw" height="40vh" id="map" />
     </>
   );
 };

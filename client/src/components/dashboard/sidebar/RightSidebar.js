@@ -47,7 +47,7 @@ const RightSidebar = props => {
   //
   // },[])
 
-  const pointlessArray = [1,2,3,4];
+  const pointlessArray = [1, 2, 3, 4];
   const classes = useStyles();
 
   const state = {
@@ -138,7 +138,9 @@ const RightSidebar = props => {
         <Box component="div">
           <Line data={data} />
         </Box>
-        {pointlessArray.map(el => <span/>)}
+        {pointlessArray.map(el => (
+          <span />
+        ))}
       </Box>
     </Box>
   );
