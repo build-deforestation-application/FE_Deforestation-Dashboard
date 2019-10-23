@@ -1,147 +1,122 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-// import { withFormik, Form, Field } from 'formik';
+import React from 'react';
+import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-// import Visibility from '@material-ui/icons/Visibility';
-// import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import Button from '@material-ui/core/Button';
 
-// ============== Styling ===============
-
-const FormContainer = styled.div`
-  margin: 1.5rem;
-  padding: 1rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5),
-              0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-  max-width: 350px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
-
-  line-height: 2rem;
-
-  label {
-    display: block;
-  }
-
-  .error {
-    color: red;
-    margin-top: -0.5rem;
-  }
-`;
+import axiosWithAuth from '../../../utils/axios';
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  paper: {
+    marginTop: theme.spacing(8),
     display: 'flex',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: `${theme.spacing(5)}px ${theme.spacing(5)}px ${theme.spacing(5)}px`,
   },
-  margin: {
-    margin: theme.spacing(1),
+  container: {
+    maxWidth: '200px',
   },
-  textField: {
-    flexBasis: 200,
+  submitButton: {
+    marginTop: '2rem',
+    marginLeft: '3rem',
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));
 
-// ============== General Form =================
-
-const SignupForm = () => {
+const SignUpForm = ({ values, touched, errors }) => {
   const classes = useStyles();
-  const [uiValues, setUiValues] = useState({
-    name: '',
-  });
-
-  const handleChange = prop => event => {
-    setUiValues({ ...uiValues, [prop]: event.target.uiValue });
-  };
 
   return (
-    <FormContainer>
-      <form>
-        <h2>Signup!</h2>
-        <Button type="button" color="primary">Primary</Button>
-        <TextField // ----------- Name --------------
-          id="outlined-adornment-name"
-          className={clsx(classes.margin, classes.textField)}
-          variant="outlined"
-          label="name"
-          value={uiValues.name}
-          onChange={handleChange('name')}
-          helperText="Name"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">Bob</InputAdornment>,
-          }}
+    <div className={classes.container}>
+      <h2>Register</h2>
+      <Form className="signin-form container">
+        
+        <TextField
+          type="text"
+          name="userName"
+          label="User Name"
+          placeholder="Enter a user name"
         />
 
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="component-helper">Real Name</InputLabel>
-          <Input
-            id="component-helper"
-            value={name}
-            onChange={handleChange}
-            aria-describedby="component-helper-text"
-          />
-          <FormHelperText id="component-helper-text">
-            Some important helper text
-          </FormHelperText>
-        </FormControl>
+        <TextField
+          type="email"
+          name="email"
+          label="Email"
+          placeholder="Enter your email" >
+        {touched.email && errors.email && <p>{errors.email}</p>}
+        </TextField>
 
-        <TextField // ----------- Email --------------
-          id="outlined-adornment-email"
-          className={clsx(classes.margin, classes.textField)}
-          variant="outlined"
-          label="email"
-          value={uiValues.email}
-          onChange={handleChange('email')}
-          helperText="Email"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">this@that.com</InputAdornment>,
-          }}
-        />
-        <TextField // ----------- Password -------------
-          id="outlined-adornment-password"
-          className={clsx(classes.margin, classes.textField)}
-          variant="outlined"
-          label="password"
-          value={uiValues.password}
-          onChange={handleChange('password')}
-          helperText="Password"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">Password</InputAdornment>,
-          }}
-        />
-        <TextField // ----------- location --------------
-          id="outlined-adornment-location"
-          className={clsx(classes.margin, classes.textField)}
-          variant="outlined"
-          label="location"
-          value={uiValues.name}
-          onChange={handleChange('location')}
-          helperText="Location"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">Location</InputAdornment>,
-          }}
-        />
+        <TextField
+          id="password"
+          name="password"
+          type="password"
+          label="Password"
+          placeholder="Choose your password"
+        >
+        {touched.password && errors.password && <p>{errors.password}</p>}
+        </TextField>
 
-        <button type="submit">Submit!</button>
-      </form>
-    </FormContainer>
+        <TextField
+          id="confirmPassword"
+          name="confirmPassword"
+          label="Confirm Password"
+          placeholder="12345"
+          type="password"
+        >
+        {touched.password && errors.password && <p>{errors.password}</p>}
+        </TextField>
+
+        <Button
+          variant="contained"
+          type="submit"
+          className={classes.submitButton}
+          >Submit</Button>
+      </Form>
+    </div>
   );
 };
 
-export default SignupForm;
+const FormikSignUpForm = withFormik({
+  mapPropsToValues({ userName, email, password }) {
+    return {
+      userName: userName || '',
+      email: email || '',
+      password: password || '',
+    };
+  },
+  validationSchema: Yup.object().shape({
+
+    userName: Yup.string()
+      .required('A user name is required to register.')
+      .min(3, 'Please choose a longer user name.'),
+    email: Yup.string()
+      .email('Please enter a valid email address')
+      .required('You must enter an email address.'),
+    password: Yup.string()
+      .required('You must enter a valid password')
+      .min(8, 'Your password must be at least 8 characters long'),
+  }),
+  handleSubmit(values, { props }) {
+    // props for history
+    console.log(props);
+    axiosWithAuth()
+      .post('/auth/register', {
+        userName: values.userName,
+        password: values.password,
+        email: values.email,
+      })
+      .then(res => {
+        console.log('response', res);
+      })
+      .catch(err => {
+        console.error('error', err);
+      });
+  },
+})(SignUpForm);
+
+export default FormikSignUpForm;
