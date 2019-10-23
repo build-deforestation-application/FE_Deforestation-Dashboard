@@ -48,14 +48,7 @@ function HomeIcon(props) {
 
 const Navbar = () => {
   const classes = useStyles();
-  const [loggedIn, setLoggedIn] = useState(true);
-
-  useEffect(() => {
-    axios
-      .get('https://be-deforestation.herokuapp.com/query')
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-  }, [loggedIn]);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   if (loggedIn) {
     return (

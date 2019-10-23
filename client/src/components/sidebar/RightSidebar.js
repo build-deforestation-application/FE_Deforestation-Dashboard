@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   dataTitle: {
@@ -41,20 +42,33 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RightSidebar = props => {
-  // const [alias, setAlias] = useState({})
-  // const [data, setData] = useState(props.data)
-  // useEffect(() => {
-  //
-  // },[])
+  const [alias, setAlias] = useState({});
+  const [apiData, setApiData] = useState([]);
+  const [filteredData, setFilteredData] = useState({});
 
-  const pointlessArray = [1,2,3,4];
+  useEffect(() => {
+    if (apiData) {
+      setAlias(props.aliases[props.aliasName]);
+      setFilteredData(
+        apiData.filter(country => country.includes(alias.countryCode)),
+      );
+    }
+  }, [props.aliasName]);
+
+  useEffect(() => {
+    axios
+      .get('https://be-deforestation.herokuapp.com/query')
+      .then(res => setApiData(res))
+      .catch(err => console.log(err));
+  }, []);
+
+  const pointlessArray = [1, 2, 3, 4];
   const classes = useStyles();
 
   const state = {
     alias: {
       name: 'United States',
-      yearFrom: 2000,
-      yearTo: 2009,
+      year: alias.year,
       coverage: [70, 80, 65, 60, 80, 40, 45, 90, 100, 80],
       area: '100,000,000',
       gain: '90,000,000',
@@ -63,18 +77,18 @@ const RightSidebar = props => {
     },
   };
 
-  const dateRange = () => {
-    const years = [];
+  // const dateRange = () => {
+  //   const years = [];
 
-    for (let i = state.alias.yearFrom; i <= state.alias.yearTo; i++) {
-      years.push(i);
-    }
+  //   for (let i = state.alias.yearFrom; i <= state.alias.yearTo; i++) {
+  //     years.push(i);
+  //   }
 
-    return years;
-  };
+  //   return years;
+  // };
 
   const data = {
-    labels: dateRange(),
+    labels: [alias.year],
     datasets: [
       {
         label: 'Tree coverage',
@@ -138,7 +152,9 @@ const RightSidebar = props => {
         <Box component="div">
           <Line data={data} />
         </Box>
-        {pointlessArray.map(el => <span/>)}
+        {pointlessArray.map(el => (
+          <span />
+        ))}
       </Box>
     </Box>
   );
