@@ -21,17 +21,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const LeftSidebar = ({ data, setTemp, temp }) => {
+const LeftSidebar = ({ data, setTemp }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     country: '',
-    year: null,
   });
-
-  const options = [];
-  for (let year = 1990; year <= 2016; year++) {
-    options.push(year);
-  }
 
   const handleChange = event => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -40,7 +34,6 @@ const LeftSidebar = ({ data, setTemp, temp }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(values);
     setTemp(values);
   };
 
@@ -62,23 +55,6 @@ const LeftSidebar = ({ data, setTemp, temp }) => {
           >
             {data.map(item => {
               return <MenuItem value={item.Country}>{item.Country}</MenuItem>;
-            })}
-          </Select>
-        </FormControl>
-        <br />
-        <br />
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="year-simple">Year</InputLabel>
-          <Select
-            value={values.year}
-            onChange={handleChange}
-            inputProps={{
-              name: 'year',
-              id: 'year-simple',
-            }}
-          >
-            {options.map(year => {
-              return <MenuItem value={year}>{year}</MenuItem>;
             })}
           </Select>
         </FormControl>

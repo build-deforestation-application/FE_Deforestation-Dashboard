@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import fetchData from '../../services/queryApi';
 
-import Left from '../../components/panels/Left';
+import Bottom from '../../components/panels/Bottom';
 import Display from '../../components/panels/Display';
+import Info from '../../components/panels/Info';
 
 export default () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,8 @@ export default () => {
   return (
     <>
       Data is here
-      <Left data={data} setTemp={setTemp} />
+      <Bottom data={data} setTemp={setTemp} />
+      <Info data={data} temp={temp} />
       <Display data={data} temp={temp} />
     </>
   );
