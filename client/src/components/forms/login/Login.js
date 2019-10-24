@@ -64,18 +64,18 @@ const LoginForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
     const credentials = { email: values.email, password: values.password };
-    console.log(`Submitted login request with these credentials:`, credentials);
-    console.log(`See component for proof of authentication request`);
-    // axiosWithAuth()
-    //   .post('/auth/login', {
-    //     email: values.email,
-    //     password: values.password,
-    //   })
-    //   .then(res => {
-    //     localStorage.setItem('token', res.data);
-    //     props.history.push('/dashboard');
-    //   })
-    //   .catch(err => console.log(err));
+    // console.log(`Submitted login request with these credentials:`, credentials);
+    // console.log(`See component for proof of authentication request`);
+    axiosWithAuth()
+      .post('/auth/login', {
+        email: values.email,
+        password: values.password,
+      })
+      .then(res => {
+        localStorage.setItem('token', res.data);
+        props.history.push('/dashboard');
+      })
+      .catch(err => console.log(err));
   };
 
   return (

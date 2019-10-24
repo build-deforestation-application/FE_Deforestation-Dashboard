@@ -1,27 +1,39 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ControlsContext from '../../contexts/ControlsContext'
 import axios from '../../utils/axios'
+import { getter, post } from '../../services/queryBackend'
 
 export default () => {
 
     const { history, setHistory } = useContext(ControlsContext)
+    const [ localHistory, setLocalHistory ] = useState([]) 
 
     useEffect (() => {
-        axios()
-        .get('/history')
-        .then(res => setHistory(res))
-        .catch(err => console.log(err))
+        getter()
+        .then(res => console.log('RES',res))
     })
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        post(`query`, { 'queries': 'dakotah' })
+        .then(res => {
+            console.log('POST: ',res)
+            setHistory([
+                ...history, res.data
+            ])
+        })
+    }
     
     return (
-
         <ControlsContext.Consumer>
             {() => {
                 return (
-                    <h1>{history}</h1>
+                    <>
+                        <h1>{history}</h1>
+                        <button onClick={e => handleSubmit(e)}>post test</button>
+                    </>
                 )
             }}
         </ControlsContext.Consumer>
-
     )
 }

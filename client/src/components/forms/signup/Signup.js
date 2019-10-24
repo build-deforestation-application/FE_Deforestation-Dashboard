@@ -74,20 +74,20 @@ const SignUpForm = () => {
       password: values.password,
       username: values.userName,
     };
-    console.log(`Signed up with these credentials:`, credentials);
-    console.log(`See component for proof of authentication request`);
-    // axiosWithAuth()
-    //   .post('/auth/register', {
-    //     userName: values.userName,
-    //     password: values.password,
-    //     email: values.email,
-    //   })
-    //   .then(res => {
-    //     console.log('response', res);
-    //   })
-    //   .catch(err => {
-    //     console.error('error', err);
-    //   });
+    // console.log(`Signed up with these credentials:`, credentials);
+    // console.log(`See component for proof of authentication request`);
+    axiosWithAuth()
+      .post('/auth/register', {
+        userName: values.userName,
+        password: values.password,
+        email: values.email,
+      })
+      .then(res => {
+        console.log('response', res);
+      })
+      .catch(err => {
+        console.error('error', err);
+      });
   };
 
   return (

@@ -10,7 +10,7 @@ import ControlsContext from '../../contexts/ControlsContext';
 export default () => {
   const [ data, setData ] = useState([]);
   const [ temp, setTemp ] = useState({});
-  const [ history, setHistory ] = useState([])
+  const [ history, setHistory ] = useState([]);
   
 
 

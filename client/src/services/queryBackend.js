@@ -1,10 +1,15 @@
 import axios from '../utils/axios';
 
-const baseURL = ``;
+const baseURL = `https://be-deforestation.herokuapp.com`;
 
 // Send query to web BE with body req of DS query
-export const post = async query => {
-  const result = await axios().post(`${baseURL}`, query).then(res => res);
+export const getter = async () => {
+  const result = await axios().get(`${baseURL}/query`).then(res => res)
+  return result;
+}
+
+export const post = async (endpoint, query) => {
+  const result = await axios().post(`${baseURL}/${endpoint}`, query).then(res => res);
 
   return result;
 };
