@@ -13,16 +13,16 @@ export default () => {
         .then(res => console.log('RES',res))
     })
 
-    const handleSubmit = e => {
-        e.preventDefault()
-        post(`query`, { 'queries': 'dakotah' })
-        .then(res => {
-            console.log('POST: ',res)
-            setHistory([
-                ...history, res.data
-            ])
-        })
-    }
+    // const handleSubmit = e => {
+    //     e.preventDefault()
+    //     post(`query`, { 'queries': 'dakotah' })
+    //     .then(res => {
+    //         console.log('POST: ',res)
+    //         setHistory([
+    //             ...history, res.data
+    //         ])
+    //     })
+    // }
     
     return (
         <ControlsContext.Consumer>
@@ -30,7 +30,7 @@ export default () => {
                 return (
                     <>
                         <h1>{history}</h1>
-                        <button onClick={e => handleSubmit(e)}>post test</button>
+                        <button onClick={console.log('ayyylmaoooo')}>post test</button>
                     </>
                 )
             }}
