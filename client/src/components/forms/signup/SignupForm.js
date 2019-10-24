@@ -7,6 +7,8 @@ import Card from '@material-ui/core/Card';
 
 import axiosWithAuth from '../../../utils/axios';
 
+// ------------------ Styling --------------------
+
 const useStyles = makeStyles(theme => ({
 
   signupCard: {
@@ -49,6 +51,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+// ------------ Form Validation --------------
+
+
+
+// --------------- Signup Form ----------------
 const SignUpForm = () => {
   const classes = useStyles();
   const [values, setValues] = useState({
@@ -57,14 +64,41 @@ const SignUpForm = () => {
     password: '',
     confirmPassword: '',
   });
+  const [errors, setErrors] = useState({});
+  // const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    console.log('UseErrors:', errors);
+  }, [errors]);
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const handleSubmit = event => {
+  const validate = vals => {
+    let errs = {};
+    console.log(vals);
+
+    if (vals.userName === '')
+      errs.userName = 'Username is required';
+    if (vals.email === '')
+      errs.email = 'Email is required';
+    if (vals.password.length < 8)
+      errs.password = 'Password is required';
+    if (vals.confirmPassword !== vals.password)
+      errs.confirmPassword = "Passwords don't match";
+
+    console.log(errs);
+    return errs;
+  }
+
+  const handleSubmit = async event => {
     event.preventDefault();
-    axiosWithAuth()
+    await setErrors(validate(values));
+    console.log(errors);
+    // setIsSubmitting(true);
+
+    /* axiosWithAuth()
       .post('/auth/register', {
         userName: values.userName,
         password: values.password,
@@ -75,7 +109,7 @@ const SignUpForm = () => {
       })
       .catch(err => {
         console.error('error', err);
-      });
+      }); */ // DON'T SUBMIT THIS FOR NOW. WE DON'T HAVE A BACK END ANYWAY.
   };
 
   return (
@@ -89,19 +123,19 @@ const SignUpForm = () => {
           label="User Name"
           placeholder="Enter a user name"
           value={values.userName}
+          helperText={errors.userName}
           onChange={handleChange('userName')}
         />
-
         <TextField
           type="email"
           name="email"
           label="Email"
           placeholder="Enter your email"
           value={values.email}
+          helperText={errors.email}
           onChange={handleChange('email')}
         >
         {/* touched.email && errors.email && <p>{errors.email}</p> */}
-        Blank
         </TextField>
 
         <TextField
@@ -111,10 +145,10 @@ const SignUpForm = () => {
           label="Password"
           placeholder="Choose your password"
           value={values.password}
+          helperText={errors.password}
           onChange={handleChange('password')}
         >
         {/*touched.password && errors.password && <p>{errors.password}</p> */}
-        Blank again
         </TextField>
 
         <TextField
@@ -124,11 +158,11 @@ const SignUpForm = () => {
           placeholder="12345"
           type="password"
           value={values.confirmPassword}
+          helperText={errors.confirmPassword}
           onChange={handleChange('confirmPassword')}
         >
         {/*touched.confirmPassword &&
          errors.confirmPassword && <p>{errors.confirmPassword}</p> */}
-         More Blank
         </TextField>
 
         <Button

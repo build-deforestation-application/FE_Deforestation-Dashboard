@@ -9,24 +9,27 @@ import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
   outerContainer: {
-    borderRight: '1px solid black',
+    border: '4px solid hotpink',
     height: '100vh',
-    width: '20rem',
+    width: '10rem',
     marginLeft: '0',
     marginTop: '0',
     position: 'fixed',
   },
+  formControl: {
+    minWidth: '220',
+    background: 'color: red'
+  },
 }));
 
 const LeftSidebar = props => {
-
   const classes = useStyles();
   const [values, setValues] = useState({
     country: 'CAN',
     year: '2011',
   });
-  const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleChange = event => {
+    setValues({ ...values, [event.target.name]: event.target.value });
   };
 
   return (
@@ -36,6 +39,7 @@ const LeftSidebar = props => {
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="country-simple">Country</InputLabel>
           <Select
+            placeholder={"USA"}
             value={values.country}
             onChange={handleChange}
             inputProps={{
@@ -48,7 +52,7 @@ const LeftSidebar = props => {
             <MenuItem value="MEX">Mexico</MenuItem>
           </Select>
         </FormControl>
-
+        <hr />
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="year-simple">Country</InputLabel>
           <Select
