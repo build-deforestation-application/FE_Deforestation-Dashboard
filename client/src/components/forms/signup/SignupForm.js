@@ -9,7 +9,7 @@ import axiosWithAuth from '../../../utils/axios';
 
 // ------------------ Styling --------------------
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({ // TODO: CLEAN UP STYLING
 
   signupCard: {
     display: 'flex',
@@ -43,17 +43,33 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: 200,
   },
-  submitButton: {   // TODO: MAKE ME GREEN!
+  submitButton: {
     marginTop: '2rem',
     marginLeft: '3rem',
     display: 'flex',
     alignSelf: 'center',
+    backgroundColor: '#7BAD2C',
+    color: 'white',
   },
 }));
 
 // ------------ Form Validation --------------
 
+const validate = vals => {
+  let errs = {};
 
+  if (vals.userName === '')
+    errs.userName = 'Username is required';
+  if (vals.email === '')
+    errs.email = 'Email is required';
+  if (vals.password.length === 0)
+    errs.password = 'Password is required';
+  else if (vals.password.length < 8)
+    errs.password = 'Minimum 8 chars';
+  if (vals.confirmPassword !== vals.password)
+    errs.confirmPassword = "Passwords don't match";
+  return errs;
+}
 
 // --------------- Signup Form ----------------
 const SignUpForm = () => {
@@ -64,41 +80,32 @@ const SignUpForm = () => {
     password: '',
     confirmPassword: '',
   });
-  const [errors, setErrors] = useState({});
-  // const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({
+    userName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
 
   useEffect(() => {
-    console.log('UseErrors:', errors);
-  }, [errors]);
+    setErrors(validate(values));
+  }, [values]);
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const validate = vals => {
-    let errs = {};
-    console.log(vals);
-
-    if (vals.userName === '')
-      errs.userName = 'Username is required';
-    if (vals.email === '')
-      errs.email = 'Email is required';
-    if (vals.password.length < 8)
-      errs.password = 'Password is required';
-    if (vals.confirmPassword !== vals.password)
-      errs.confirmPassword = "Passwords don't match";
-
-    console.log(errs);
-    return errs;
-  }
-
-  const handleSubmit = async event => {
+  // ---- Submit Form ----
+  const handleSubmit = event => {
     event.preventDefault();
-    await setErrors(validate(values));
-    console.log(errors);
-    // setIsSubmitting(true);
-
-    /* axiosWithAuth()
+    setErrors(validate(values));
+    if (Object.values(errors).length > 0) {
+      console.log('Fields failing validation:', Object.values(errors).length);
+      console.log(errors);
+      return;
+    }
+    // No errors. Continue posting.
+    axiosWithAuth()
       .post('/auth/register', {
         userName: values.userName,
         password: values.password,
@@ -109,13 +116,14 @@ const SignUpForm = () => {
       })
       .catch(err => {
         console.error('error', err);
-      }); */ // DON'T SUBMIT THIS FOR NOW. WE DON'T HAVE A BACK END ANYWAY.
+      });
   };
 
+  // ---- Form Contents ----
   return (
     <Card className={classes.signupCard}>
       <form onSubmit={handleSubmit}>
-        
+
         <TextField
           type="text"
           id="userName"
@@ -126,6 +134,7 @@ const SignUpForm = () => {
           helperText={errors.userName}
           onChange={handleChange('userName')}
         />
+
         <TextField
           type="email"
           name="email"
@@ -134,9 +143,7 @@ const SignUpForm = () => {
           value={values.email}
           helperText={errors.email}
           onChange={handleChange('email')}
-        >
-        {/* touched.email && errors.email && <p>{errors.email}</p> */}
-        </TextField>
+        />
 
         <TextField
           id="password"
@@ -147,9 +154,7 @@ const SignUpForm = () => {
           value={values.password}
           helperText={errors.password}
           onChange={handleChange('password')}
-        >
-        {/*touched.password && errors.password && <p>{errors.password}</p> */}
-        </TextField>
+        />
 
         <TextField
           id="confirmPassword"
@@ -160,16 +165,13 @@ const SignUpForm = () => {
           value={values.confirmPassword}
           helperText={errors.confirmPassword}
           onChange={handleChange('confirmPassword')}
-        >
-        {/*touched.confirmPassword &&
-         errors.confirmPassword && <p>{errors.confirmPassword}</p> */}
-        </TextField>
+        />
 
         <Button
           variant="contained"
           type="submit"
           className={classes.submitButton}
-          >Register</Button>
+        >Register</Button>
       </form>
     </Card>
   );
