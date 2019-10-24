@@ -13,12 +13,7 @@ const App = () => {
   return (
     <>
       <div>
-        <Dashboard/>
-        <Switch>
-          <Route path="/signup" component={SignUpForm} />
-          <Private path="/dashboard" component={Dashboard} />
-          <Route exact path="/" component={LoginForm} />
-        </Switch>
+        <LoginForm />
       </div>
     </>
   );

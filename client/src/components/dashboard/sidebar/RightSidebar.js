@@ -42,53 +42,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RightSidebar = props => {
-  const [alias, setAlias] = useState({});
-  const [apiData, setApiData] = useState([]);
-  const [filteredData, setFilteredData] = useState({});
-
-  useEffect(() => {
-    if (apiData) {
-      setAlias(props.aliases[props.aliasName]);
-      setFilteredData(
-        apiData.filter(country => country.includes(alias.countryCode)),
-      );
-    }
-  }, [props.aliasName]);
-
-  useEffect(() => {
-    axios
-      .get('https://be-deforestation.herokuapp.com/query')
-      .then(res => setApiData(res))
-      .catch(err => console.log(err));
-  }, []);
+  const [filteredData, setFilteredData] = useState([]);
 
   const pointlessArray = [1, 2, 3, 4];
   const classes = useStyles();
 
-  const state = {
-    alias: {
-      name: 'United States',
-      year: alias.year,
-      coverage: [70, 80, 65, 60, 80, 40, 45, 90, 100, 80],
-      area: '100,000,000',
-      gain: '90,000,000',
-      loss: '10,000,000',
-      delta: '7.9%',
-    },
-  };
-
-  // const dateRange = () => {
-  //   const years = [];
-
-  //   for (let i = state.alias.yearFrom; i <= state.alias.yearTo; i++) {
-  //     years.push(i);
-  //   }
-
-  //   return years;
-  // };
+  useEffect(() => {
+    setFilteredData(
+      props.countryData.filter(el => Object.values(el).includes(props.year)),
+    );
+  }, [props.country, props.year]);
 
   const data = {
-    labels: [alias.year],
+    labels: [filteredData.year],
     datasets: [
       {
         label: 'Tree coverage',
@@ -109,7 +75,7 @@ const RightSidebar = props => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: state.alias.coverage,
+        data: filteredData.coverage,
       },
     ],
   };
@@ -118,34 +84,34 @@ const RightSidebar = props => {
     <Box component="div" className={classes.containerOuter}>
       <Box component="div" className={classes.containerInner}>
         <Typography variant="h4" className={classes.dataTitle}>
-          {state.alias.name}
+          {props.country}
         </Typography>
 
         <Box component="div" className={classes.dataElement}>
           <Typography className={classes.dataSpan}>Total Land</Typography>
           <Typography className={classes.dataSpan}>
-            {state.alias.area}
+            {filteredData.totalLand}
           </Typography>
         </Box>
 
         <Box component="div" className={classes.dataElement}>
           <Typography className={classes.dataSpan}>Forest Gain</Typography>
           <Typography className={classes.dataSpan}>
-            {state.alias.gain}
+            {filteredData.gain}
           </Typography>
         </Box>
 
         <Box component="div" className={classes.dataElement}>
           <Typography className={classes.dataSpan}>Forest Loss</Typography>
           <Typography className={classes.dataSpan}>
-            {state.alias.loss}
+            {filteredData.loss}
           </Typography>
         </Box>
 
         <Box component="div" className={classes.dataElement}>
           <Typography className={classes.dataSpan}>Delta</Typography>
           <Typography className={clsx(classes.dataSpan, classes.delta)}>
-            {state.alias.delta}
+            {filteredData.delta}
           </Typography>
         </Box>
 

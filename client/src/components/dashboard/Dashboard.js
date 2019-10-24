@@ -10,6 +10,7 @@ import dashboard from './dashboard.module.scss';
 
 export default () => {
   const [data, setData] = useState({});
+  const [placeholderAlias] = useState('usa')
 
   useEffect(() => {
     getRaw().then(res => {
@@ -23,7 +24,7 @@ export default () => {
       <Navbar />
       <div className={dashboard.container}>
         <Map />
-        <RightSidebar />
+        <RightSidebar alias={placeholderAlias} />
       </div>
     </>
   );
