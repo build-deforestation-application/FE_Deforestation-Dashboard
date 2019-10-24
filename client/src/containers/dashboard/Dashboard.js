@@ -22,8 +22,7 @@ export default () => {
     <ControlsContext.Provider value={{ data, setData, temp, setTemp, history, setHistory }}>
       <h1>Data is here</h1>
       <Info />{/* data temp */}
-      <Display />{/* data temp */}
-      <Bottom /> {/* data setTemp */}
+      <Bottom />
     </ControlsContext.Provider>
   );
 };

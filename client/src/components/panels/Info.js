@@ -42,13 +42,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Info = () => {
+  const { data, temp } = useContext(ControlsContext);
+  const [countryData, setCountryData] = useState();
+  const [countryValues, setCountryValues] = useState('');
 
-  const { data, temp } = useContext(ControlsContext)
+  console.log('info', data);
+  console.log('info', temp);
 
-  //   console.log('info', data);
-  //   console.log('info', temp);
-  //   Use find to filter data for temp and display values in graph
-  //   {JSON.stringify(data.find(x => x.Country === temp.country), null, 2)}
+  useEffect(() => {
+    setCountryData(data.find(x => x.Country === temp.country), null, 2);
+  }, [data, temp.country]);
+
+  useEffect(() => {
+    if (countryData) {
+      setCountryValues(Object.values(countryData).slice(0, -2));
+    }
+  }, [countryData]);
 
   const pointlessArray = [1, 2, 3, 4];
   const classes = useStyles();
@@ -98,7 +107,7 @@ const Info = () => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: state.alias.coverage,
+        data: countryValues,
       },
     ],
   };
@@ -108,48 +117,54 @@ const Info = () => {
       {() => {
         return (
           <Box component="div" className={classes.containerOuter}>
-        <Box component="div" className={classes.containerInner}>
-          <Typography variant="h4" className={classes.dataTitle}>
-            {state.alias.name}
-          </Typography>
-  
-          <Box component="div" className={classes.dataElement}>
+            <Box component="div" className={classes.containerInner}>
+              <Typography variant="h4" className={classes.dataTitle}>
+                {temp.country}
+              </Typography>
+
+              {/* <Box component="div" className={classes.dataElement}>
             <Typography className={classes.dataSpan}>Total Land</Typography>
             <Typography className={classes.dataSpan}>
               {state.alias.area}
             </Typography>
-          </Box>
-  
-          <Box component="div" className={classes.dataElement}>
+          </Box> */}
+
+              {/* <Box component="div" className={classes.dataElement}>
             <Typography className={classes.dataSpan}>Forest Gain</Typography>
             <Typography className={classes.dataSpan}>
               {state.alias.gain}
             </Typography>
-          </Box>
-  
-          <Box component="div" className={classes.dataElement}>
+          </Box> */}
+
+              {/* <Box component="div" className={classes.dataElement}>
             <Typography className={classes.dataSpan}>Forest Loss</Typography>
             <Typography className={classes.dataSpan}>
               {state.alias.loss}
             </Typography>
+          </Box> */}
+
+              <Box component="div" className={classes.dataElement}>
+                <Typography className={classes.dataSpan}>Delta</Typography>
+                <Typography className={clsx(classes.dataSpan, classes.delta)}>
+                  {countryData &&
+                    (
+                      ((countryData['2016'] - countryData['1990']) * 100) /
+                      countryData['1990']
+                    )
+                      .toFixed(1)
+                      .toString() + '%'}
+                </Typography>
+              </Box>
+
+              <Box component="div">
+                <Line data={datum} />
+              </Box>
+              {pointlessArray.map(el => (
+                <span />
+              ))}
+            </Box>
           </Box>
-  
-          <Box component="div" className={classes.dataElement}>
-            <Typography className={classes.dataSpan}>Delta</Typography>
-            <Typography className={clsx(classes.dataSpan, classes.delta)}>
-              {state.alias.delta}
-            </Typography>
-          </Box>
-  
-          <Box component="div">
-            <Line data={datum} />
-          </Box>
-          {pointlessArray.map(el => (
-            <span />
-          ))}
-        </Box>
-      </Box>
-        )
+        );
       }}
     </ControlsContext.Consumer>
   );
