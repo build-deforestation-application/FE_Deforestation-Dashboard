@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Line } from 'react-chartjs-2';
 import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import ControlsContext from '../../contexts/ControlsContext';
 
 const useStyles = makeStyles(theme => ({
   dataTitle: {
@@ -40,7 +41,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Info = ({ data, temp }) => {
+const Info = () => {
+
+  const { data, temp } = useContext(ControlsContext)
+
   //   console.log('info', data);
   //   console.log('info', temp);
   //   Use find to filter data for temp and display values in graph
@@ -100,48 +104,54 @@ const Info = ({ data, temp }) => {
   };
 
   return (
-    <Box component="div" className={classes.containerOuter}>
-      <Box component="div" className={classes.containerInner}>
-        <Typography variant="h4" className={classes.dataTitle}>
-          {state.alias.name}
-        </Typography>
-
-        <Box component="div" className={classes.dataElement}>
-          <Typography className={classes.dataSpan}>Total Land</Typography>
-          <Typography className={classes.dataSpan}>
-            {state.alias.area}
+    <ControlsContext.Consumer>
+      {() => {
+        return (
+          <Box component="div" className={classes.containerOuter}>
+        <Box component="div" className={classes.containerInner}>
+          <Typography variant="h4" className={classes.dataTitle}>
+            {state.alias.name}
           </Typography>
+  
+          <Box component="div" className={classes.dataElement}>
+            <Typography className={classes.dataSpan}>Total Land</Typography>
+            <Typography className={classes.dataSpan}>
+              {state.alias.area}
+            </Typography>
+          </Box>
+  
+          <Box component="div" className={classes.dataElement}>
+            <Typography className={classes.dataSpan}>Forest Gain</Typography>
+            <Typography className={classes.dataSpan}>
+              {state.alias.gain}
+            </Typography>
+          </Box>
+  
+          <Box component="div" className={classes.dataElement}>
+            <Typography className={classes.dataSpan}>Forest Loss</Typography>
+            <Typography className={classes.dataSpan}>
+              {state.alias.loss}
+            </Typography>
+          </Box>
+  
+          <Box component="div" className={classes.dataElement}>
+            <Typography className={classes.dataSpan}>Delta</Typography>
+            <Typography className={clsx(classes.dataSpan, classes.delta)}>
+              {state.alias.delta}
+            </Typography>
+          </Box>
+  
+          <Box component="div">
+            <Line data={datum} />
+          </Box>
+          {pointlessArray.map(el => (
+            <span />
+          ))}
         </Box>
-
-        <Box component="div" className={classes.dataElement}>
-          <Typography className={classes.dataSpan}>Forest Gain</Typography>
-          <Typography className={classes.dataSpan}>
-            {state.alias.gain}
-          </Typography>
-        </Box>
-
-        <Box component="div" className={classes.dataElement}>
-          <Typography className={classes.dataSpan}>Forest Loss</Typography>
-          <Typography className={classes.dataSpan}>
-            {state.alias.loss}
-          </Typography>
-        </Box>
-
-        <Box component="div" className={classes.dataElement}>
-          <Typography className={classes.dataSpan}>Delta</Typography>
-          <Typography className={clsx(classes.dataSpan, classes.delta)}>
-            {state.alias.delta}
-          </Typography>
-        </Box>
-
-        <Box component="div">
-          <Line data={datum} />
-        </Box>
-        {pointlessArray.map(el => (
-          <span />
-        ))}
       </Box>
-    </Box>
+        )
+      }}
+    </ControlsContext.Consumer>
   );
 };
 
