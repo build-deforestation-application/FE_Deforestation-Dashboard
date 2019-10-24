@@ -19,7 +19,18 @@ export default () => {
       zoomControl: true,
     });
 
-    getData().then(res => L.geoJson(res.data.features).addTo(map));
+    const setColor = (feature, layer) => {
+      console.log(feature);
+      if (feature.properties.value === '8') {
+        layer.options.color = '#FFFFFF';
+      }
+    };
+
+    getData().then(res =>
+      L.geoJson(res.data.features, {
+        onEachFeature: setColor,
+      }).addTo(map),
+    );
 
     L.tileLayer(
       `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png`,
