@@ -36,6 +36,7 @@ export default () => {
           <h1>Welcome, User</h1>
           <Controls />
           <Info />{/* data temp */}
+          <Display />
        </StyledDashboard>
     </ControlsContext.Provider>
   );
