@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader'
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -15,16 +16,22 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     height: '400px',
     width: '250px',
+    margin: '20vh auto',
   },
 
   formControl: {
     margin: theme.spacing(2),
   },
 
+  loginFormHeader: {
+    margin: '0 auto',
+  },
+
   loginFormContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    margin: '0 auto',
   },
 
   myButton: {
@@ -81,6 +88,7 @@ const LoginForm = props => {
   return (
     <div className="loginFormContainer">
       <Card className={classes.myCard}>
+        <CardHeader className='loginFormHeader' title='Log in:' />
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel ref={labelRef} htmlFor="component-outlined">
             Email
