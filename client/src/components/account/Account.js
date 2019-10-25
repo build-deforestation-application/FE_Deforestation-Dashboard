@@ -1,10 +1,33 @@
 import React from 'react';
 
-export default () => {
+const AccountCard = props => {
+  const handleEdit = () => {
+    console.log('edit request');
+  };
 
-    const storage = localStorage.getItem('storage')
+  const handleDelete = () => {
+    console.log('delete request');
+  };
+
   return (
-  <>
-  {/* {storage && storage.map(item => <h1>{item}</h1>)} */}
-  </>);
+    <div>
+      <h1>{props.name}</h1>
+      <button onClick={() => handleEdit()}>Edit</button>
+      <button onClick={() => handleDelete()}>Delete</button>
+    </div>
+  );
+};
+
+export default () => {
+  const storage = window.localStorage.getItem('post');
+  const parse = JSON.parse(storage);
+  console.log(parse);
+
+  return (
+    <>
+      {parse.map((x, i) => (
+        <AccountCard name={x} key={i} />
+      ))}
+    </>
+  );
 };

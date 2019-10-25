@@ -23,8 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Search = () => {
-
-  const { data, temp, setTemp } = useContext(ControlsContext)
+  const { data, temp, setTemp } = useContext(ControlsContext);
 
   const classes = useStyles();
   const [values, setValues] = useState({
@@ -40,33 +39,39 @@ const Search = () => {
     setTemp(values);
   };
 
-  console.log(data);
   return (
-      <ControlsContext.Consumer>
-        {() =>{
+    <ControlsContext.Consumer>
+      {() => {
         return (
-        <div className="outerContainer">
-          <form className={classes.root} autoComplete="off" onSubmit={handleSubmit}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="country-simple">Country</InputLabel>
-              <Select
-                value={values.country}
-                onChange={handleChange}
-                inputProps={{
-                  name: 'country',
-                  id: 'country-simple',
-                }}
-              >
-                {data.map(item => {
-                  return <MenuItem value={item.Country}>{item.Country}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-        )}}
-      </ControlsContext.Consumer>
+          <div className="outerContainer">
+            <form
+              className={classes.root}
+              autoComplete="off"
+              onSubmit={handleSubmit}
+            >
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="country-simple">Country</InputLabel>
+                <Select
+                  value={values.country}
+                  onChange={handleChange}
+                  inputProps={{
+                    name: 'country',
+                    id: 'country-simple',
+                  }}
+                >
+                  {data.map(item => {
+                    return (
+                      <MenuItem value={item.Country}>{item.Country}</MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        );
+      }}
+    </ControlsContext.Consumer>
   );
 };
 

@@ -46,9 +46,6 @@ const Info = () => {
   const [countryData, setCountryData] = useState();
   const [countryValues, setCountryValues] = useState('');
 
-  console.log('info', data);
-  console.log('info', temp);
-
   useEffect(() => {
     setCountryData(data.find(x => x.Country === temp.country), null, 2);
   }, [data, temp.country]);

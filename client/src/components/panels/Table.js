@@ -9,9 +9,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import ControlsContext from '../../contexts/ControlsContext';
-import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
-import { post } from '../../services/queryBackend'
+import { post } from '../../services/queryBackend';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,61 +38,58 @@ export default ({ country, code, year }) => {
   // year = array of tuples
   // country & code = values
   const { history, setHistory } = useContext(ControlsContext);
-  const [ storedValue, setValue ] = useLocalStorage('storage')
+  // const [ storedValue, setValue ] = useLocalStorage('storage')
   const classes = useStyles();
 
   const onClick = e => {
-    setHistory([
-      ...history, code
-    ])
-    setValue([
-      ...history, code])
-    console.log('SV' , storedValue)
-    
+    setHistory([...history, code]);
+    window.localStorage.setItem('post', JSON.stringify(history));
+    console.log(window.localStorage.getItem('post'));
 
     // logic for saving favorite areas
     // post()
     // .then(res => console.log(res.data))
     // .catch(err => console.log(err))
-
   };
 
   return (
     <ControlsContext.Consumer>
-      {() => { return (<div className={classes.root}>
-          <Paper className={classes.paper}>
-            <div className={classes.country}>
-              {country} ({code})
-            </div>
-            <Table
-              className={classes.table}
-              size="small"
-              aria-label="a dense table"
-            >
-              <TableHead>
-                <TableRow>
-                  {year.map(year => {
-                    return <TableCell align="center">{year[0]}</TableCell>;
-                  })}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  {year.map(year => {
-                    return (
-                      <TableCell align="center">
-                        {Math.round(year[1]).toLocaleString()}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-          <button onClick={onClick}>
-            Favorite
-          </button>
-        </div>)}}
+      {() => {
+        return (
+          <div className={classes.root}>
+            <Paper className={classes.paper}>
+              <div className={classes.country}>
+                {country} ({code})
+              </div>
+              <Table
+                className={classes.table}
+                size="small"
+                aria-label="a dense table"
+              >
+                <TableHead>
+                  <TableRow>
+                    {year.map(year => {
+                      return <TableCell align="center">{year[0]}</TableCell>;
+                    })}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    {year.map(year => {
+                      return (
+                        <TableCell align="center">
+                          {Math.round(year[1]).toLocaleString()}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Paper>
+            <button onClick={onClick}>Favorite</button>
+          </div>
+        );
+      }}
     </ControlsContext.Consumer>
   );
 };
