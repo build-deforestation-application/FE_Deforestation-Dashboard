@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 const Search = () => {
 
-  const { data, setTemp } = useContext(ControlsContext)
+  const { data, temp, setTemp } = useContext(ControlsContext)
 
   const classes = useStyles();
   const [values, setValues] = useState({
@@ -33,7 +33,6 @@ const Search = () => {
 
   const handleChange = event => {
     setValues({ ...values, [event.target.name]: event.target.value });
-    console.log(values);
   };
 
   const handleSubmit = e => {
@@ -47,8 +46,6 @@ const Search = () => {
         {() =>{
         return (
         <div className="outerContainer">
-          <h2>Welcome, User</h2>
-          <h3>Search:</h3>
           <form className={classes.root} autoComplete="off" onSubmit={handleSubmit}>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="country-simple">Country</InputLabel>

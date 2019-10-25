@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import fetchData from '../../services/queryApi';
+import styled from 'styled-components'
 
 // components
 import Display from '../../components/panels/Display';
 import Info from '../../components/panels/Info';
-import Bottom from '../../components/panels/Bottom';
+import Controls from '../../components/panels/Controls';
 import ControlsContext from '../../contexts/ControlsContext';
+
+
+const StyledDashboard = styled.div`
+  background: #f2eee5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 64px;
+`
+
+
 
 export default () => {
   const [ data, setData ] = useState([]);
@@ -20,10 +32,11 @@ export default () => {
 
   return (
     <ControlsContext.Provider value={{ data, setData, temp, setTemp, history, setHistory }}>
-      <h1>Data is here</h1>
-      <Info />{/* data temp */}
-      <Display />{/* data temp */}
-      <Bottom /> {/* data setTemp */}
+       <StyledDashboard>
+          <h1>Welcome, User</h1>
+          <Controls />
+          <Info />{/* data temp */}
+       </StyledDashboard>
     </ControlsContext.Provider>
   );
 };

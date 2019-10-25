@@ -30,7 +30,7 @@ export default () => {
                 return (
                     <>
                         <h1>{history}</h1>
-                        <button onClick={console.log('ayyylmaoooo')}>post test</button>
+                        <button onClick={console.log('post test, handle submit goes here')}>post test</button>
                     </>
                 )
             }}
