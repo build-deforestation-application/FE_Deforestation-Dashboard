@@ -1,12 +1,18 @@
 import React from 'react';
+import { put } from '../../services/queryBackend';
+import { del } from '../../services/queryBackend';
 
 const AccountCard = props => {
   const handleEdit = () => {
     console.log('edit request');
+    // put(`endpoint`, body.req);
+    // endpoints are down, unknown request shape
   };
 
   const handleDelete = () => {
     console.log('delete request');
+    // del(`endpoint`, body.req);
+    // endpoints are down, unknown request shape
   };
 
   return (
