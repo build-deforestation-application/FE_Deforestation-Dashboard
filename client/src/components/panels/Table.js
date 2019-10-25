@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import ControlsContext from '../../contexts/ControlsContext';
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 
 import { post } from '../../services/queryBackend'
 
@@ -37,13 +38,17 @@ export default ({ country, code, year }) => {
   // year = array of tuples
   // country & code = values
   const { history, setHistory } = useContext(ControlsContext);
+  const [ storedValue, setValue ] = useLocalStorage('storage')
   const classes = useStyles();
 
   const onClick = e => {
     setHistory([
       ...history, code
     ])
-    console.log(history)
+    setValue([
+      ...history, code])
+    console.log('SV' , storedValue)
+    
 
     // logic for saving favorite areas
     // post()

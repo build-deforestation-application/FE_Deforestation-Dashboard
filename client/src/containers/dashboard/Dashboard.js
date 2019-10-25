@@ -30,7 +30,6 @@ export default () => {
       value={{ data, setData, temp, setTemp, history, setHistory }}
     >
       <StyledDashboard>
-        <h1>Welcome, User</h1>
         <Controls />
         <Info />
         {/* data temp */}

@@ -8,11 +8,13 @@ import SignUpForm from './components/forms/signup/SignupForm';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from './components/panels/Navbar';
 import MapView from './containers/map/MapView';
+import Account from './components/account/Account';
 
 const App = () => {
   return (
     <>
-      <Navbar />
+        <Account />
+      {/* <Navbar /> */}
       <Switch>
         <Private path="/charts" component={Dashboard} />
         <Private path="/map" component={MapView} />
