@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Search from './Search'
-import History from './History'
 
 
 export default () => {
@@ -9,7 +8,6 @@ export default () => {
     return (
         <>
             <Search />
-            <History />
         </>
     )
 }
