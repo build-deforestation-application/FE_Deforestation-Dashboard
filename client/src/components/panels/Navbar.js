@@ -115,6 +115,18 @@ const Navbar = () => {
                 Log in{' '}
               </Button>
             </Link>
+
+            <Link to="/map">
+              <Button className={classes.buttons} linkButton={true}>
+                Maps{' '}
+              </Button>
+            </Link>
+
+            <Link to="/charts">
+              <Button className={classes.buttons} linkButton={true}>
+                Charts{' '}
+              </Button>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>

@@ -7,13 +7,17 @@ import SignUpForm from './components/forms/signup/SignupForm';
 
 import { Switch, Route } from 'react-router-dom';
 import Navbar from './components/panels/Navbar';
+import MapView from './containers/map/MapView';
+import Account from './components/account/Account';
 
 const App = () => {
   return (
     <>
-      <Navbar />
+        <Account />
+      {/* <Navbar /> */}
       <Switch>
-        <Route path="/dashboard" component={Dashboard} />
+        <Private path="/charts" component={Dashboard} />
+        <Private path="/map" component={MapView} />
         <Route path="/signup" component={SignUpForm} />
         <Route path="/" component={Login} />
       </Switch>
