@@ -7,14 +7,23 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 
+import ErrorIcon from '@material-ui/icons/Error';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import clsx from 'clsx';
+
 import axiosWithAuth from '../../../utils/axios';
+
+const variantIcon = {
+  error: ErrorIcon,
+};
 
 const useStyles = makeStyles(theme => ({
   myCard: {
     display: 'flex',
     flexDirection: 'column',
     height: '400px',
-    width: '250px',
+    width: '350px',
   },
 
   formControl: {
@@ -22,6 +31,8 @@ const useStyles = makeStyles(theme => ({
   },
 
   loginFormContainer: {
+    height: '100vh',
+    width: '100vw',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -42,7 +53,50 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
+
+  error: {
+    backgroundColor: theme.palette.error.dark,
+    width: '20px',
+  },
+
+  icon: {
+    fontSize: 20,
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing(1),
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  margin: {
+    marginTop: '10px',
+    marginLeft: '10px',
+    boxSizing: 'border-box',
+    marginRight: '100px',
+  },
 }));
+
+function MySnackbarContentWrapper(props) {
+  const classes = useStyles();
+  const { className, message, onClose, variant, ...other } = props;
+  const Icon = variantIcon[variant];
+
+  return (
+    <SnackbarContent
+      className={clsx(classes[variant], className)}
+      aria-describedby="client-snackbar"
+      message={
+        <span id="client-snackbar" className={classes.message}>
+          <Icon className={clsx(classes.icon, classes.iconVariant)} />
+          {message}
+        </span>
+      }
+      {...other}
+    />
+  );
+}
 
 const LoginForm = props => {
   const classes = useStyles();
@@ -51,6 +105,10 @@ const LoginForm = props => {
   const [values, setValues] = useState({
     email: '',
     password: '',
+    errors: {
+      email: '',
+      authentication: '',
+    },
   });
 
   useEffect(() => {
@@ -59,6 +117,11 @@ const LoginForm = props => {
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
+    if (!/\S+@\S+\.\S+/.test(values.email)) {
+      values.errors.email = 'Enter a valid email address';
+    } else {
+      values.errors.email = '';
+    }
   };
 
   const handleSubmit = event => {
@@ -73,9 +136,11 @@ const LoginForm = props => {
     //   })
     //   .then(res => {
     //     localStorage.setItem('token', res.data);
-    //     props.history.push('/dashboard');
+    //     props.history.push('/dashboard')
     //   })
-    //   .catch(err => console.log(err));
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
 
   return (
@@ -88,11 +153,18 @@ const LoginForm = props => {
 
           <OutlinedInput
             id="component-outlined-email-input"
-            type="email"
             value={values.email}
+            name="email"
             onChange={handleChange('email')}
             labelWidth={labelWidth}
           />
+          {values.errors.email && (
+            <MySnackbarContentWrapper
+              variant="error"
+              className={classes.margin}
+              message={values.errors.email}
+            />
+          )}
         </FormControl>
 
         <FormControl variant="outlined" className={classes.formControl}>
@@ -102,7 +174,7 @@ const LoginForm = props => {
 
           <OutlinedInput
             id="component-outlined-password-input"
-            value={values.password}
+            value={values.password || ''}
             onChange={handleChange('password')}
             labelWidth={labelWidth}
             type="password"
