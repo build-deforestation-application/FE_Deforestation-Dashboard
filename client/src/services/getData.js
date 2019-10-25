@@ -3,7 +3,8 @@ import axios from 'axios';
 export default async () => {
   const result = await axios
     .get(
-      'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json',
+      'https://raw.githubusercontent.com/coopwilliams/Deforestation_BE/master/countries02.geo.json',
+      // 'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json',
     )
     .then(res => res);
 

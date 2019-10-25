@@ -24,7 +24,7 @@ const createMap = () => {
     }
     options.weight = 0.5;
     options.color = '#71eeb8';
-    options.fillOpacity = feature.properties['2025'] / 100;
+    options.fillOpacity = feature.properties['1990'] / 100;
   };
 
   getData().then(res =>

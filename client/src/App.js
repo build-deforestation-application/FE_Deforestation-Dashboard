@@ -9,11 +9,14 @@ import { Switch, Route } from 'react-router-dom';
 // import Dashboard from './components/dashboard/Dashboard';
 // import Navbar from './components/navbar/Navbar';
 import Map from './containers/map/MapContainer';
+import NewMap from './containers/map/MapNew';
 
 const App = () => {
+  const [year, setYear] = React.useState(true);
   return (
     <>
-      <Map />
+      <button onClick={() => setYear(!year)}>Toggle</button>
+      {year ? <Map /> : <NewMap />}
       {/* <Switch>
           <Route path="/signup" component={SignUpForm} />
           <Private path="/dashboard" component={Dashboard} />
