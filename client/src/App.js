@@ -8,7 +8,7 @@ import { Switch, Route } from 'react-router-dom';
 // import SignUpForm from './components/forms/signup/SignupForm';
 // import Dashboard from './components/dashboard/Dashboard';
 // import Navbar from './components/navbar/Navbar';
-import Map from './containers/map/MapContainer';
+import Map from './containers/map/MapOld';
 import NewMap from './containers/map/MapNew';
 
 const App = () => {

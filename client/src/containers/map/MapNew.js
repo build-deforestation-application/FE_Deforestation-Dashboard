@@ -11,8 +11,8 @@ const Wrapper = styled.div`
 
 const createMap = () => {
   let map = L.map('map', {
-    center: [-10.99404, 39.75621],
-    zoom: 4,
+    center: [20.44694705960048, -35.1328125],
+    zoom: 3,
     zoomControl: true,
   });
 
@@ -23,8 +23,8 @@ const createMap = () => {
       options.fill = false;
     }
     options.weight = 0.5;
-    options.color = '#71eeb8';
-    options.fillOpacity = feature.properties['1990'] / 100;
+    options.color = '#013220';
+    options.fillOpacity = feature.properties['1990'] / 200;
   };
 
   getData().then(res =>
