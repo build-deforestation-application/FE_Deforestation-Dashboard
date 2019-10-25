@@ -1,15 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-import Search from './Search'
-import History from './History'
-
+import Search from './Search';
+import History from './History';
 
 export default () => {
-
-    return (
-        <>
-            <Search />
-            <History />
-        </>
-    )
-}
+  return (
+    <>
+      <Search />
+      <History />
+    </>
+  );
+};
